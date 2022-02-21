@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useGetCaptchaToken } from "./hook/useGetCaptchaToken";
+import { useGetInitialCaptcha } from "./hook/useInitialCaptcha";
 import "./App.css";
 
 declare global {
@@ -10,18 +11,13 @@ declare global {
 
 function App() {
     const SITE_KEY = "6LfYm48eAAAAALijNLawLq5AmM_-FdBaaqTzNlQV";
+    useGetInitialCaptcha(SITE_KEY);
     const onGetToken = useGetCaptchaToken();
 
     const onSubmit = async () => {
         const token = await onGetToken(SITE_KEY);
         alert(token);
     };
-
-    useEffect(() => {
-        const script = document.createElement("script");
-        script.src = "https://www.google.com/recaptcha/api.js?render=" + SITE_KEY;
-        document.body.appendChild(script);
-    }, []);
 
     return (
         <div className="App">
